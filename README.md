@@ -26,8 +26,6 @@ spring-boot-starter-validation (Bean Validation)
 
 MySQL (banco de dados)
 
-MySQL Connector (driver)
-
 Apache Tiles (layout e organização de páginas JSP)
 
 MessageSource para i18n (messages.properties)
@@ -38,18 +36,14 @@ Crie um schema no MySQL, por exemplo vmtecdb.
 Crie um usuário (por exemplo vmtec_admin) com as permissões necessárias.
 
 No arquivo application.properties, configure a conexão com o MySQL, definindo URL, usuário e senha:
-
-properties
-Copiar
 spring.datasource.url=jdbc:mysql://localhost:3306/vmtecdb
 spring.datasource.username=vmtec_admin
 spring.datasource.password=SUASENHA
 spring.jpa.hibernate.ddl-auto=update
-O parâmetro spring.jpa.hibernate.ddl-auto=update fará com que o Hibernate crie ou atualize as tabelas automaticamente (em um ambiente de produção, avalie a estratégia de geração de schema).
+
 
 4. Estrutura de Pastas e Pacotes
 
-5. Principais Funcionalidades
 Cadastro de Usuário
 DTO: UserRegistrationDto
 
@@ -63,7 +57,7 @@ POST em /register: processa o DTO, chama o UserService e retorna mensagens de su
 
 UserService
 
-Método registerNewUser(...):
+Método registerNewUser
 
 Verifica se o e-mail já está em uso; se sim, lança exceção.
 
@@ -80,7 +74,7 @@ Recebe parâmetros (nome, page, size).
 
 Chama userService.findAll(nome, pageable).
 
-Retorna para a JSP list-users.jsp (via Tiles ou outro método) contendo a lista paginada.
+Retorna para a JSP list-users.jsp contendo a lista paginada.
 
 Edição de Usuário
 Método updateUser(Integer id, UserRegistrationDto dto) em UserService:
@@ -98,7 +92,7 @@ Envia e-mail informando a atualização.
 Envio de E-mail
 EmailService e EmailServiceImpl:
 
-Implementam o método enviarEmail(...).
+Implementam o método enviarEmail.
 
 Por padrão, o envio de e-mail é apenas simulado com impressão no console (System.out.println(...)), mas pode ser integrado a um servidor SMTP real.
 
@@ -117,7 +111,7 @@ Nos controladores e serviços, utilizamos messageSource.getMessage("chave", null
 Clonar o repositório:
 
 git clone https://github.com/seu-usuario/vmtec_cabralbrcwb.git
-Configurar o MySQL:
+
 
 Criar o schema vmtecdb ou ajustar o nome no application.properties.
 
@@ -145,6 +139,5 @@ O HTML/CSS é personalizável (o projeto traz exemplos com JSP + Bootstrap).
 
 A aplicação tem configuração básica de Spring Security, podendo ser expandida para exigir autenticação nas rotas de listagem, edição etc.
 
-O template foi obtido de fonte aberta na internet e posteriormente personalizado para atender às necessidades específicas do layout das interfaces. Embora tenha sido utilizado como base estrutural, todos os elementos (Bootstrap, JavaScript, jQuery, CSS e imagens) foram adaptados e customizados de maneira significativa, resultando em uma implementação original que não constitui uma simples reprodução do material de referência.
 
-Enquanto os elementos visuais e de interface foram adaptados a partir de um template de código aberto, toda a implementação da camada de backend—incluindo lógica de negócios, processamento de dados, integração com sistemas e funcionalidades do servidor—foi desenvolvida integralmente por mim, constituindo trabalho original e proprietário.
+8 Aplicaçãõ em produção Heroku: https://vmtec-0e7049358cd1.herokuapp.com/register
