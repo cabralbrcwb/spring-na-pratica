@@ -36,16 +36,17 @@ public class SignUpController {
     @Autowired
     private UserService userService;
 
-    @GetMapping("/register")
-    public ModelAndView register(HttpServletRequest request, HttpServletResponse response)
-            throws ServletException, IOException {
-
+    @GetMapping({"/", "/register"})
+    public ModelAndView register() {
         logger.info("Exibindo página de registro...");
 
         ModelAndView modelAndView = new ModelAndView("register");
         modelAndView.addObject("userRegistrationForm", new UserRegistrationDto());
         return modelAndView;
     }
+
+
+
 
     @PostMapping("/register")
     public ResponseEntity<String> registerUser(UserRegistrationDto userRegistrationDto,
