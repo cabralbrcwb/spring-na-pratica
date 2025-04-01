@@ -1,3 +1,17 @@
+1. Visão Geral
+Este projeto tem como objetivo construir uma aplicação web para cadastro e gerenciamento de usuários, com as seguintes características:
+
+Registro e edição de informações de usuário (nome, e-mail, senha, etc.).
+
+Listagem paginada de usuários.
+
+Envio de e-mail de boas-vindas e de atualização (simulado via console).
+
+Internacionalização (i18n) para português e inglês.
+
+Uso de Spring Security para uma camada básica de segurança (pode ser expandida).
+
+2. Tecnologias e Dependências
 Java 11
 
 Spring Boot 2.7.1:
