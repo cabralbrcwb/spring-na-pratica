@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE tiles-definitions PUBLIC
+        "-//Apache Software Foundation//DTD Tiles Configuration 3.0//EN"
+        "http://tiles.apache.org/dtds/tiles-config_3_0.dtd">
+<tiles-definitions>
+
+    <!-- Base Definition -->
+    <definition name="base.definition.main" template="/WEB-INF/pages/template/template.jsp">
+        <put-attribute name="body" value=""/>
+    </definition>
+
+    <!-- login -->
+    <definition name="login" template="/WEB-INF/pages/public/sign-in.jsp">
+        <put-attribute name="title" value="sign-in"/>
+        <put-attribute name="body" value="/WEB-INF/pages/public/sign-in.jsp"/>
+    </definition>
+
+    <!-- register -->
+    <definition name="register" template="/WEB-INF/pages/public/sign-up.jsp">
+        <put-attribute name="title" value="sign-up"/>
+        <put-attribute name="body" value="/WEB-INF/pages/public/sign-up.jsp"/>
+    </definition>
+
+    <!-- list-users -->
+    <definition name="list-users" extends="base.definition.main">
+        <put-attribute name="title" value="Lista de Usuários"/>
+        <put-attribute name="body" value="/WEB-INF/pages/list-users.jsp"/>
+    </definition>
+
+    <!-- edit-user  -->
+    <definition name="edit-user" extends="base.definition.main">
+        <put-attribute name="title" value="Edição de Usuário"/>
+        <put-attribute name="body" value="/WEB-INF/pages/edit-user.jsp"/>
+    </definition>
+
+
+</tiles-definitions>

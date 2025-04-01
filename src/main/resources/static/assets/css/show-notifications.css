@@ -1,0 +1,27 @@
+#toastNotification {
+  width: auto !important;
+  max-width: 552px !important;
+  font-size: 1.2em !important;
+}
+
+.toast-center-important {
+    top: 50% !important;
+    left: 50% !important;
+    transform: translate(-50%, -50%) !important;
+}
+
+.toast-header {
+  justify-content: space-between !important;
+}
+
+.btn-close {
+  margin-left: auto !important;
+}
+
+.bg-soft-success {
+    background-color: #00ff00 !important;  /* Cor de fundo para sucesso */
+}
+
+.bg-soft-danger {
+    background-color: #f44336 !important;  /* Cor de fundo para erro */
+}

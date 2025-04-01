@@ -1,0 +1,295 @@
+/* === HEADER STYLES === */
+.background-header {
+  position: relative !important;
+}
+
+.background-header::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.1);
+  z-index: 1;
+}
+
+.title-on-header {
+  position: absolute !important;
+  top: 50% !important; left: 50% !important;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+  background: rgba(255, 255, 255, 0.3);
+  padding: 20px;
+  border-radius: 10px;
+  text-align: center;
+}
+
+.title-on-header h2 {
+  margin: 0;
+  font-size: 2em;
+}
+
+/* === NAVBAR STYLES === */
+.iq-top-navbar {
+  position: sticky;
+  top: 0;
+  height: 50px !important;
+  width: 100%;
+  background: #fff;
+  z-index: 1111;
+  transition: all .3s ease-in-out;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, .05);
+}
+
+.navbar-inner {
+  height: 60px !important;
+}
+
+/* === DATA BLOCK STYLES === */
+.header-for-bg .data-block {
+  display: inline-block;
+  background: rgba(255, 255, 255, 0.0) !important;
+  padding: 1.25rem;
+  border-radius: .313rem;
+}
+
+/* === IMAGE STYLES === */
+.img-fluid-custom {
+  max-width: 1920px;
+  max-height: 468px;
+  width: 100%;
+  height: auto;
+  object-fit: cover;
+}
+
+.img-fluid-custom-goal-create {
+  max-width: 1920px !important;
+  max-height: 468px !important;
+  width: 100% !important;
+  height: auto !important;
+  object-fit: contain !important;
+  object-position: center !important;
+}
+
+/* === CARD STYLES HOME PAGE === */
+.card-feature {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: var(--bs-card-bg);
+  background-clip: border-box;
+  border: var(--bs-card-border-width) solid var(--bs-card-border-color);
+  border-radius: var(--bs-card-border-radius);
+  min-height: 400px;
+}
+
+.card-feature .card-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.card-feature .card-text {
+  flex: 1;
+}
+
+.card-footer .text-muted {
+  font-size: 14px;
+  color: #6c757d;
+}
+
+.btn-success-margin {
+  margin-bottom: 20px;
+  margin-left: 16px;
+}
+
+/* === CARD STYLES HOME PAGE === */
+.card-feature {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  word-wrap: break-word;
+  background-color: var(--bs-card-bg);
+  background-clip: border-box;
+  border: var(--bs-card-border-width) solid var(--bs-card-border-color);
+  border-radius: var(--bs-card-border-radius);
+  min-height: 400px;
+}
+
+.card-feature .card-body {
+  display: flex;
+  flex-direction: column;
+}
+
+.card-feature .card-text {
+  flex: 1;
+}
+
+.card-footer .text-muted {
+  font-size: 14px;
+  color: #6c757d;
+}
+
+.btn-success-margin {
+  margin-bottom: 20px;
+  margin-left: 16px;
+}
+
+.card img {
+  width: 100%; /* Define a largura para preencher o contêiner */
+  height: auto; /* Ajusta a altura automaticamente para manter a proporção */
+  object-fit: contain; /* Garante que toda a imagem se ajuste dentro do contêiner sem cortes */
+  border-radius: 8px; /* Bordas arredondadas, se desejado */
+}
+
+.card-img-top {
+  width: 100%; /* Define a largura para preencher o contêiner */
+  height: auto; /* Ajusta a altura automaticamente para manter a proporção */
+  object-fit: contain; /* Garante que toda a imagem se ajuste dentro do contêiner sem cortes */
+  border-radius: 0.25rem; /* Bordas arredondadas, se desejado */
+  display: block; /* Remove espaços extras abaixo da imagem */
+}
+
+
+/* === CAROUSEL STYLES HOME PAGE === */
+.carousel-inner {
+  position: relative;
+  width: 100%;
+  height: 468px !important;
+}
+
+.carousel-item {
+  position: relative;
+  display: none;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.carousel-item img {
+  object-fit: cover !important;
+  object-position: center !important;
+  width: 100% !important;
+  height: 100% !important;
+}
+
+.carousel-item::before {
+  content: "";
+  position: absolute;
+  top: 0; left: 0;
+  width: 100%; height: 100%;
+  background: rgba(0, 0, 0, 0.4);
+  z-index: 1;
+}
+
+.carousel-caption {
+  position: absolute;
+  left: 30%;
+  transform: translateX(-50%);
+  z-index: 2;
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 10px;
+  text-align: left;
+  border-radius: 5px;
+  max-width: 50%;
+}
+
+.carousel-caption h5, .carousel-caption p, .carousel-caption a {
+  font-size: 1.2rem;
+  color: #fff;
+}
+
+.carousel-caption h5 {
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.carousel-caption a:hover {
+  background-color: rgba(0, 0, 0, 0.9);
+}
+
+/* === MISCELLANEOUS === */
+.logo-title img {
+  max-height: 58px !important;
+  width: auto !important;
+  height: auto !important;
+}
+
+.sidebar {
+  top: 3.5rem;
+}
+
+
+/*profile.jsp page*/
+@media (min-width: 1600px) {
+    #coverImage {
+        height: 400px;
+    }
+}
+@media (max-width: 1599px) {
+    #coverImage {
+        height: 250px;
+    }
+}
+@media (max-width: 991px) {
+    #coverImage {
+        height: 200px;
+    }
+}
+
+#coverImage {
+    width: 100%;
+    object-fit: cover;
+    object-position: center;
+}
+
+.header-for-bg {
+    overflow: hidden;
+}
+
+
+
+#row-goal-concluido {
+  display: flex;
+  flex-wrap: wrap;
+}
+
+#row-goal-concluido .col-lg-6 {
+  display: flex;
+}
+
+#row-goal-concluido .card {
+  display: flex;
+  flex-direction: column;
+  flex: 1;
+  justify-content: space-between;
+}
+
+#row-goal-concluido .card .card-body {
+  flex: 1;
+}
+
+#row-goal-concluido .card img {
+  max-height: 150px;
+  width: 100%;
+  object-fit: cover;
+}
+
+/*#row-goal-concluido .trophy-image {
+    position: relative;
+    width: 50px !important;
+}*/
+
+#row-goal-concluido .trophy-image {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    width: 30px !important; /* Reduz o tamanho da imagem do troféu */
+}
+
+
+/* === CREATE GOAL === */
+.image-block {
+
+}
