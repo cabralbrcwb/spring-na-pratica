@@ -50,19 +50,20 @@
          <div class="fxt-video-background">
             <div class="fxt-video">
                <div id="fxtVideo" data-property="{
-                  videoURL:'F_7ZoAQ3aJM',
-                  autoPlay:true,
-                  mute:true,
-                  loop:true,
-                  startAt:0,
-                  opacity:1,
-                  quality:'default',
-                  showControls:false,
-                  optimizeDisplay:true,
-                  containment:'.fxt-video-background'
-                  }">
+                   videoURL:'n_30MdZ9kL8',
+                   autoPlay:true,
+                   mute:true,
+                   loop:true,
+                   startAt:0,
+                   opacity:1,
+                   quality:'default',
+                   showControls:false,
+                   optimizeDisplay:true,
+                   containment:'.fxt-video-background'
+                   }">
                </div>
             </div>
+        </div>
          </div>
          <!-- Video Area Start Here -->
          <div class="container">
