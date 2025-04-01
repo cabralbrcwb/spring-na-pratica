@@ -8,7 +8,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <title>Vm Tec - Cadastro de Usuário</title>
 
-    <link rel="shortcut icon" href="<c:url value='/assets/images/favicon.ico'/>" />
+
     <link rel="stylesheet" href="<c:url value='/assets/css/libs.min.css'/>">
     <link rel="stylesheet" href="<c:url value='/assets/css/socialv.css?v=5.0.2'/>">
     <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:opsz,wght,FILL,GRAD@20..48,100..700,0..1,-50..200" />
