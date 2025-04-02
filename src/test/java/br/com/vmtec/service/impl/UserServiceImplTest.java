@@ -68,12 +68,10 @@ class UserServiceImplTest {
 
         when(userRepository.existsByEmail("daniel@silva.com")).thenReturn(true);
 
-        // Act & Assert
         assertThrows(UserAlreadyExistAuthenticationException.class, () -> {
             userService.registerNewUser(validDto);
         });
 
-        // Verifica se não chamou save nem emailService
         verify(userRepository, never()).save(any(User.class));
         verify(emailService, never()).enviarEmail(anyString(), anyString());
     }
@@ -102,7 +100,6 @@ class UserServiceImplTest {
         lenient().when(userRepository.existsByEmail("daniel@silva.com")).thenReturn(false);
         lenient().when(passwordEncoder.encode("123456")).thenReturn("encoded_123456");
 
-        // Simula retorno de User salvo
         User savedMock = new User();
         savedMock.setId(1);
         savedMock.setName("João");
@@ -111,10 +108,8 @@ class UserServiceImplTest {
 
         when(userRepository.save(any(User.class))).thenReturn(savedMock);
 
-        // Act
         User savedUser = userService.registerNewUser(validDto);
 
-        // Assert
         assertNotNull(savedUser);
         assertEquals("daniel@silva.com", savedUser.getEmail());
         assertEquals("encoded_123456", savedUser.getPassword());
@@ -162,22 +157,17 @@ class UserServiceImplTest {
      */
     @Test
     public void loginUserCorrectPassword_returnsUser() {
-        // Arrange
         String emailMock = "user@test.com";
         String plainPassword = "securePassword";
         String encodedPassword = "securePasswordEncoded";
-        // Create a mock user
         User userMock = new User();
         userMock.setId(1);
         userMock.setName("Daniel Silva");
         userMock.setEmail(emailMock);
         userMock.setPassword(encodedPassword);
-        // Simulate repository and passwordEncoder behavior
         when(userRepository.findByEmail(emailMock)).thenReturn(Optional.of(userMock));
         when(passwordEncoder.matches(plainPassword, encodedPassword)).thenReturn(true);
-        // Act
         User returnedUser = userService.findByEmailAndPassword(emailMock, plainPassword);
-        // Assert
         assertNotNull(returnedUser, "O retorno do objeto não deveria ser nulo.");
         assertEquals(emailMock, returnedUser.getEmail(), "O usuario deve ter o mesmo email.");
         verify(passwordEncoder).matches(plainPassword, encodedPassword);
