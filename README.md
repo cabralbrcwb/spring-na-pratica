@@ -1,143 +1,103 @@
-1. Visão Geral
-Este projeto tem como objetivo construir uma aplicação web para cadastro e gerenciamento de usuários, com as seguintes características:
+ VMTEC – Cadastro de Usuários - Aplicação disponível em: 
+ https://vmtec-0e7049358cd1.herokuapp.com/
 
-Registro e edição de informações de usuário (nome, e-mail, senha, etc.).
+Aplicação em Spring Boot para cadastro, listagem e edição de usuários. Inclui autenticação com Spring Security, envio de e-mails (simulado) e layout modular com Apache Tiles.
 
-Listagem paginada de usuários.
+# 1. Visão Geral
+Este projeto foi desenvolvido para demonstrar um CRUD de Usuários em um ambiente Spring Boot, com persistência via MySQL e segurança básica por meio do Spring Security.
 
-Envio de e-mail de boas-vindas e de atualização (simulado via console).
+O objetivo principal é fornecer um exemplo completo de aplicação web em camadas, incluindo:
 
-Internacionalização (i18n) para português e inglês.
+- Cadastro de novos usuários com verificação de e-mail único.
 
-Uso de Spring Security para uma camada básica de segurança (pode ser expandida).
+- Listagem paginada e filtrável de usuários.
 
-2. Tecnologias e Dependências
+- Edição dos dados de cada usuário.
+
+- Autenticação via formulário de login.
+
+- Envio de e-mails simulado no console para fins de notificação e rollback da transação quando ocorrer erro no cadastro do usuário.
+
+# 2. Principais Funcionalidades
+Registro de Usuários: Endpoint público para criar um novo cadastro, com validação de dados (Bean Validation).
+
+Autenticação: Login tradicional controlado pelo Spring Security, com senha criptografada em BCrypt.
+
+Gerenciamento de Usuários:
+
+Listagem paginada e filtrável por nome.
+
+Edição de dados, incluindo troca de e-mail (checa duplicidade) e atualização de senha.
+
+Internacionalização (i18n): Mensagens de erro/sucesso em mais de um idioma (ex.: messages_pt.properties e messages_en.properties).
+
+Layout usando Apache Tiles para organização de templates JSP.
+
+# 3. Arquitetura em Camadas
+
+Controller (Apresentação)  ->  Service (Regra de Negócio)  ->  Repository (Persistência)  ->  Model (Entidades)
+
+# 4. Tecnologias e Dependências Principais
 Java 11
+Spring Boot 2.7.x
+Starter Web (Spring MVC)
+Starter Data JPA (Hibernate)
+Starter Security (Autenticação)
+Starter Validation (Bean Validation)
+MySQL (Driver JDBC)
+Apache Tiles (Layout de páginas JSP)
+Spring Security OAuth (dependência disponível, mas login social não implementado)
+JUnit 5 e Mockito (via spring-boot-starter-test) para testes.
 
-Spring Boot 2.7.1:
+No arquivo pom.xml constam detalhes de versão e demais bibliotecas auxiliares.
 
-spring-boot-starter-web
+# 5. Estrutura de Pacotes
 
-spring-boot-starter-data-jpa
+- User: Entidade JPA que representa o usuário (campos de nome, email, senha, datas(último login, criação, atualização, etc.).
 
-spring-boot-starter-security
+- UserRegistrationDto: Captura dados de formulário para cadastro/edição de usuários.
 
-spring-boot-starter-validation (Bean Validation)
+- UserServiceImpl: Lógica principal de cadastro de usuário (verifica duplicidade, criptografa senha, envia e-mail).
 
-MySQL (banco de dados)
+- UserRepository: Métodos de consulta por email, busca paginada etc.
 
-Apache Tiles (layout e organização de páginas JSP)
+# 6. Internacionalização (i18n)
+A classe MessageSourceConfig carrega messages_en.properties e messages_pt.properties. 
+O Bean Validation também usa essas mensagens para feedback de erros.
 
-MessageSource para i18n (messages.properties)
+Mensagens de sucesso e erro de cadastro, duplicidade de e-mail etc. 
+São obtidas do MessageSource, respeitando o Locale do cliente.
 
-3. Configuração do Banco de Dados
-Crie um schema no MySQL, por exemplo vmtecdb.
+# 7. Frontend (JSP + Tiles)
+Tiles: O arquivo WEB-INF/tiles.xml define o layout principal (template.jsp) e as páginas (list-users, edit-user, login, register).
 
-Crie um usuário (por exemplo vmtec_admin) com as permissões necessárias.
+Páginas públicas: sign-in.jsp e sign-up.jsp (não usam o template principal; têm layout próprio).
 
-No arquivo application.properties, configure a conexão com o MySQL, definindo URL, usuário e senha:
-spring.datasource.url=jdbc:mysql://localhost:3306/vmtecdb
-spring.datasource.username=vmtec_admin
-spring.datasource.password=SUASENHA
-spring.jpa.hibernate.ddl-auto=update
+Páginas autenticadas: list-users.jsp, edit-user.jsp (estendem o template base).
 
+Recursos estáticos: Em src/main/resources/static/assets (CSS, JS, imagens).
 
-4. Estrutura de Pastas e Pacotes
+AJAX no registro de usuário: SignUpController retorna ResponseEntity (código HTTP 200 ou 400)
+e a página sign-up.jsp exibe alertas.
 
-Cadastro de Usuário
-DTO: UserRegistrationDto
+# 8. Segurança (Spring Security)
+- Segurança configurada em SecurityConfig.java, com CSRF desabilitado para facilitar chamadas AJAX.
 
-Contém campos como name, email, password, etc.
+- Rotas liberadas: /assets/**, /register, /forgot-password (não implementada).
 
-Controller: SignUpController
+- Protegidas: todas as demais rotas exigem login.
 
-GET em /register: exibe o formulário de cadastro (JSP).
+- Login: página em /login, envia credenciais para /j_spring_security_check e, se bem-sucedido, redireciona para /users.
 
-POST em /register: processa o DTO, chama o UserService e retorna mensagens de sucesso ou erro.
+- Logout: acessível em /logout.
 
-UserService
+# 9. Testes
+UserServiceImplTest: Exemplifica testes unitários com JUnit/Mockito, validando:
 
-Método registerNewUser
+- Registro bem-sucedido.
 
-Verifica se o e-mail já está em uso; se sim, lança exceção.
+- Falha ao tentar cadastrar usuário com e-mail duplicado.
 
-Codifica a senha (BCrypt).
+- Criptografia de senha.
 
-Persiste os dados no banco.
-
-Envia (simulado) o e-mail de boas-vindas.
-
-Listagem Paginada
-Controller: UserController em /users
-
-Recebe parâmetros (nome, page, size).
-
-Chama userService.findAll(nome, pageable).
-
-Retorna para a JSP list-users.jsp contendo a lista paginada.
-
-Edição de Usuário
-Método updateUser(Integer id, UserRegistrationDto dto) em UserService:
-
-Verifica se o ID existe; se não, lança exceção.
-
-Se o e-mail foi alterado, checa se já está em uso.
-
-Codifica a nova senha, se fornecida.
-
-Salva as alterações.
-
-Envia e-mail informando a atualização.
-
-Envio de E-mail
-EmailService e EmailServiceImpl:
-
-Implementam o método enviarEmail.
-
-Por padrão, o envio de e-mail é apenas simulado com impressão no console (System.out.println(...)), mas pode ser integrado a um servidor SMTP real.
-
-Internacionalização (i18n)
-Configuração via MessageSource para carregar mensagens em diferentes idiomas.
-
-Arquivos de exemplo:
-
-messages_pt.properties
-
-messages_en.properties
-
-Nos controladores e serviços, utilizamos messageSource.getMessage("chave", null, locale) para obter a mensagem correta conforme o idioma definido.
-
-6. Executando o Projeto
-Clonar o repositório:
-
-git clone https://github.com/seu-usuario/vmtec_cabralbrcwb.git
-
-
-Criar o schema vmtecdb ou ajustar o nome no application.properties.
-
-Ajustar usuário e senha de acordo com a instalação local.
-
-Compilar e Executar:
-cd vmtec_cabralbrcwb
-mvn spring-boot:run
-
-Por padrão, a aplicação estará disponível na porta 8080.
-
-Acessar as rotas:
-http://localhost:8080/login    (Autenticação)
-
-http://localhost:8080/register (cadastro de usuários para autenticação e listagem paginada)
-
-http://localhost:8080/users (listagem paginada)
-
-7. Observações
-O envio de e-mail está simulado (apenas imprime no console).
-
-O locale pode ser definido via interceptores do Spring ou via Accept-Language no navegador.
-
-O HTML/CSS é personalizável (o projeto traz exemplos com JSP + Bootstrap).
-
-A aplicação tem configuração básica de Spring Security, podendo ser expandida para exigir autenticação nas rotas de listagem, edição etc.
-
-
-8 Aplicaçãõ em produção Heroku: https://vmtec-0e7049358cd1.herokuapp.com/register
+- Contexto Spring: VmtecApplicationTests verifica se a aplicação carrega corretamente.
