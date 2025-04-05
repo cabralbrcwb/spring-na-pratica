@@ -38,16 +38,16 @@ Layout usando Apache Tiles para organização de templates JSP.
 Controller (Apresentação)  ->  Service (Regra de Negócio)  ->  Repository (Persistência)  ->  Model (Entidades)
 
 # 4. Tecnologias e Dependências Principais
-Java 11
-Spring Boot 2.7.x
-Starter Web (Spring MVC)
-Starter Data JPA (Hibernate)
-Starter Security (Autenticação)
-Starter Validation (Bean Validation)
-MySQL (Driver JDBC)
-Apache Tiles (Layout de páginas JSP)
-Spring Security OAuth (dependência disponível, mas login social não implementado)
-JUnit 5 e Mockito (via spring-boot-starter-test) para testes.
+- Java 11
+- Spring Boot 2.7.x
+- Starter Web (Spring MVC)
+- Starter Data JPA (Hibernate)
+- Starter Security (Autenticação)
+- Starter Validation (Bean Validation)
+- MySQL (Driver JDBC)
+- Apache Tiles (Layout de páginas JSP)
+- Spring Security OAuth (dependência disponível, mas login social não implementado)
+- JUnit 5 e Mockito (via spring-boot-starter-test) para testes.
 
 No arquivo pom.xml constam detalhes de versão e demais bibliotecas auxiliares.
 
