@@ -154,7 +154,8 @@
             </div> <!-- /row -->
         </div> <!-- /container -->
     </section>
-
+    <spring:message code="message.registration.fillAllFields" var="fillAllFieldsMsg"/>
+    <spring:message code="message.registration.invalidEmailFormat" var="invalidEmailMsg"/>
     <!-- jquery-->
     <script src="<c:url value='/assets/public/js/jquery-3.5.0.min.js'/>"></script>
     <!-- Bootstrap js -->
@@ -168,57 +169,54 @@
     <!-- Custom Js -->
     <script src="<c:url value='/assets/public/js/main.js'/>"></script>
 
-    <script>
-      $(document).ready(function() {
-        $('#doRegister').on('click', function(e) {
-          e.preventDefault();
+     <script>
+          let messageFillAllFields = "${fillAllFieldsMsg}";
+          let invalidEmailFormat = "${invalidEmailMsg}";
 
-          let nameVal = $('#name').val().trim();
-          let emailVal = $('#email').val().trim();
-          let passwordVal = $('#password').val().trim();
+          $(document).ready(function() {
+            $('#doRegister').on('click', function(e) {
+              e.preventDefault();
 
-          // Se algum campo estiver vazio, mostrar barra de erro e retornar
-          if (!nameVal || !emailVal || !passwordVal) {
-            $('#notificationMessage').text('Por favor, preencha todos os campos obrigatórios.');
-            $('#notification').fadeIn(500);
+              let nameVal = $('#name').val().trim();
+              let emailVal = $('#email').val().trim();
+              let passwordVal = $('#password').val().trim();
+              let emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
 
-            // Oculta após 5s (opcional)
-            setTimeout(function(){
-              $('#notification').fadeOut(500);
-            }, 5000);
-
-            return;
-          }
-
-          // Caso contrário, prossegue com AJAX
-          $.ajax({
-            type: 'POST',
-            url: $('#register').attr('action'),
-            data: { name: nameVal, email: emailVal, password: passwordVal },
-            success: function(response) {
-              // Exibe barra de sucesso
-              $('#successMessage').text('Usuário cadastrado com sucesso! Faça o login.');
-              $('#successNotification').fadeIn(500);
-
-              // Fecha em 5s (opcional), depois redireciona
-              setTimeout(function(){
-                $('#successNotification').fadeOut(500, function() {
-                  window.location.href = "/login";
-                });
-              }, 5000);
-            },
-            error: function(error) {
-              // Mostra barra de erro
-              $('#notificationMessage').text('Erro ao registrar. Por favor, tente novamente.');
-              $('#notification').fadeIn(500);
-
-              setTimeout(function(){
-                $('#notification').fadeOut(500);
-              }, 5000);
-            }
+              if (!nameVal || !emailVal || !passwordVal) {
+                $('#notificationMessage').text(messageFillAllFields);
+                $('#notification').fadeIn(500);
+                setTimeout(function() { $('#notification').fadeOut(500); }, 5000);
+                return;
+              }
+              if (!emailRegex.test(emailVal)) {
+                $('#notificationMessage').text(invalidEmailFormat);
+                $('#notification').fadeIn(500);
+                setTimeout(function() { $('#notification').fadeOut(500); }, 5000);
+                return;
+              }
+              $.ajax({
+                type: 'POST',
+                url: $('#register').attr('action'),
+                data: { name: nameVal, email: emailVal, password: passwordVal },
+                success: function(response) {
+                  $('#successMessage').text(response);
+                  $('#successNotification').fadeIn(500);
+                  setTimeout(function(){
+                    $('#successNotification').fadeOut(500, function() {
+                      window.location.href = "/login";
+                    });
+                  }, 5000);
+                },
+                error: function(error) {
+                  $('#notificationMessage').text(error.responseText);
+                  $('#notification').fadeIn(500);
+                  setTimeout(function(){
+                    $('#notification').fadeOut(500);
+                  }, 5000);
+                }
+              });
+            });
           });
-        });
-      });
     </script>
 </body>
 </html>
