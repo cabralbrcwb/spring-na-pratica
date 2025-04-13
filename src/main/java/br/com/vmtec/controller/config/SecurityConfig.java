@@ -26,26 +26,36 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
     @Override
     protected void configure(HttpSecurity http) throws Exception {
-        http
-                .csrf().disable()
+
+
+        http.csrf().disable()
                 .authorizeRequests()
-                .antMatchers("/assets/**", "/register", "/forgot-password").permitAll()
+
+                .antMatchers("/assets/**", "/login", "/register", "/forgot-password", "/j_spring_security_check"
+                ).permitAll()
+
                 .anyRequest().authenticated()
                 .and()
                 .formLogin()
+
                 .loginPage("/login")
                 .loginProcessingUrl("/j_spring_security_check")
+
                 .usernameParameter("j_username")
                 .passwordParameter("j_password")
+
                 .defaultSuccessUrl("/users", true)
 
                 .failureUrl("/login?error=true")
                 .permitAll()
                 .and()
                 .logout()
+
+                .logoutUrl("/logout")
+
+                .logoutSuccessUrl("/login?logout")
                 .permitAll();
     }
-
 
     @Bean
     public PasswordEncoder passwordEncoder() {
