@@ -30,12 +30,12 @@
         </p>
     <![endif]-->
 
-    <!-- Preloader -->
+    <!-- Preloader (opcional) -->
     <div id="preloader" class="preloader">
-        <div class='inner'>
-            <div class='line1'></div>
-            <div class='line2'></div>
-            <div class='line3'></div>
+        <div class="inner">
+            <div class="line1"></div>
+            <div class="line2"></div>
+            <div class="line3"></div>
         </div>
     </div>
 
@@ -69,83 +69,90 @@
                     <div class="fxt-content">
                         <h2>Faça login em sua conta</h2>
 
-                        <!-- Se o parâmetro "error" estiver presente na URL (ex.: /login?error=true), exibe a mensagem abaixo -->
+                        <!-- Mensagem de erro caso ?error=true -->
                         <c:if test="${param.error ne null}">
                             <div class="alert alert-danger text-center mb-4" role="alert">
                                 Usuário ou senha inválidos! Por favor, tente novamente.
                             </div>
                         </c:if>
 
+                        <!-- Mensagem de sucesso caso ?logout -->
+                        <c:if test="${param.logout ne null}">
+                            <div class="alert alert-success text-center mb-4" role="alert">
+                                Você saiu da sua conta com sucesso.
+                            </div>
+                        </c:if>
+
                         <div class="fxt-form">
                             <!-- Formulário de login -->
-                            <!-- Certifique-se de que o SecurityConfig define .loginProcessingUrl("/j_spring_security_check")
-                                 e utiliza j_username/j_password como parâmetros -->
+                            <!-- Observação: o SecurityConfig precisa usar .loginProcessingUrl("/j_spring_security_check") -->
                             <form action="<c:url value='/j_spring_security_check'/>" method="post">
+                                <!-- Campo hidden para enviar o token CSRF -->
+                                <input
+                                    type="hidden"
+                                    name="${_csrf.parameterName}"
+                                    value="${_csrf.token}"
+                                />
+
                                 <div class="form-group">
-                                    <div class="fxt-transformY-50 fxt-transition-delay-1">
-                                        <input
-                                            type="email"
-                                            id="email"
-                                            class="form-control"
-                                            name="j_username"
-                                            placeholder="Email"
-                                            required="required"
-                                            autocomplete="new-password"
-                                        >
-                                    </div>
+                                    <input
+                                        type="text"
+                                        id="j_username"
+                                        class="form-control"
+                                        name="j_username"
+                                        placeholder="Email"
+                                        required="required"
+                                        autocomplete="username"
+                                    >
                                 </div>
+
                                 <div class="form-group">
-                                    <div class="fxt-transformY-50 fxt-transition-delay-2">
-                                        <input
-                                            id="password"
-                                            type="password"
-                                            class="form-control"
-                                            name="j_password"
-                                            placeholder="********"
-                                            required="required"
-                                            autocomplete="new-password"
-                                        >
-                                        <i
-                                            toggle="#password"
-                                            class="fa fa-fw fa-eye toggle-password field-icon"
-                                        ></i>
-                                    </div>
+                                    <input
+                                        id="j_password"
+                                        type="password"
+                                        class="form-control"
+                                        name="j_password"
+                                        placeholder="********"
+                                        required="required"
+                                        autocomplete="current-password"
+                                    >
+                                    <!-- Ícone para mostrar/ocultar senha (opcional) -->
+                                    <i
+                                        toggle="#j_password"
+                                        class="fa fa-fw fa-eye toggle-password field-icon"
+                                    ></i>
                                 </div>
+
+                                <!-- Exemplo de checkbox 'Mantenha-me conectado' (opcional) -->
                                 <div class="form-group">
-                                    <div class="fxt-transformY-50 fxt-transition-delay-3">
-                                        <div class="fxt-checkbox-area">
-                                            <div class="checkbox">
-                                                <input id="checkbox1" type="checkbox">
-                                                <label for="checkbox1">Mantenha-me conectado</label>
-                                            </div>
+                                    <div class="fxt-checkbox-area">
+                                        <div class="checkbox">
+                                            <input id="checkbox1" type="checkbox">
+                                            <label for="checkbox1">Mantenha-me conectado</label>
                                         </div>
                                     </div>
                                 </div>
+
+                                <!-- Botão de login -->
                                 <div class="form-group">
-                                    <div class="fxt-transformY-50 fxt-transition-delay-4">
-                                        <button
-                                            type="submit"
-                                            class="fxt-btn-fill"
-                                            style="background-color:#01cc66"
-                                        >
-                                            Entrar
-                                        </button>
-                                    </div>
+                                    <button
+                                        type="submit"
+                                        class="fxt-btn-fill"
+                                        style="background-color:#01cc66"
+                                    >
+                                        Entrar
+                                    </button>
                                 </div>
                             </form>
                         </div>
 
+                        <!-- Link de registro (opcional) -->
                         <div class="fxt-footer">
-                            <div class="fxt-transformY-50 fxt-transition-delay-9">
-                                <p>Não tem uma conta?
-                                    <a
-                                        href="<c:url value='/register'/>"
-                                        class="switcher-text2 inline-text"
-                                    >
-                                        Registrar
-                                    </a>
-                                </p>
-                            </div>
+                            <p>Não tem uma conta?
+                                <a href="<c:url value='/register'/>" class="switcher-text2 inline-text">
+                                    Registrar
+                                </a>
+                            </p>
                         </div>
                     </div> <!-- /fxt-content -->
                 </div> <!-- /col-lg-6 -->
@@ -157,11 +164,11 @@
     <script src="<c:url value='/assets/public/js/jquery-3.5.0.min.js'/>"></script>
     <!-- Bootstrap JS -->
     <script src="<c:url value='/assets/public/js/bootstrap.min.js'/>"></script>
-    <!-- ImagesLoaded JS -->
+    <!-- ImagesLoaded JS (opcional) -->
     <script src="<c:url value='/assets/public/js/imagesloaded.pkgd.min.js'/>"></script>
-    <!-- YouTube Plugin JS -->
+    <!-- YouTube Plugin JS (para vídeo de fundo) -->
     <script src="<c:url value='/assets/public/js/jquery.mb.YTPlayer.min.js'/>"></script>
-    <!-- Validator JS -->
+    <!-- Validator JS (opcional) -->
     <script src="<c:url value='/assets/public/js/validator.min.js'/>"></script>
     <!-- Custom JS -->
     <script src="<c:url value='/assets/public/js/main.js'/>"></script>
