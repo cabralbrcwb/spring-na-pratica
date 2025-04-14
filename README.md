@@ -1,3 +1,18 @@
+# VMTEC – Sistema de Cadastro de Usuários
+
+[![Status do Build](https://img.shields.io/badge/build-passing-brightgreen.svg)](https://github.com/)
+
+
+<p align="left">
+  <img src="https://img.shields.io/badge/Java-11-red.svg" alt="Java 11">
+  <img src="https://img.shields.io/badge/Spring_Boot-2.7.x-brightgreen.svg" alt="Spring Boot">
+  <img src="https://img.shields.io/badge/MySQL-Database-blue.svg" alt="MySQL">
+  <img src="https://img.shields.io/badge/JPA-Hibernate-orange.svg" alt="JPA/Hibernate">
+  <img src="https://img.shields.io/badge/Spring_Security-secure-green.svg" alt="Spring Security">
+  <img src="https://img.shields.io/badge/JUnit-5-lightgrey.svg" alt="JUnit 5">
+  <img src="https://img.shields.io/badge/Mockito-testing-blueviolet.svg" alt="Mockito">
+</p>
+
 # VMTEC – Cadastro de Usuários
 
 🌐 Aplicação disponível em: [vmtec-0e7049358cd1.herokuapp.com](https://vmtec-0e7049358cd1.herokuapp.com/)
