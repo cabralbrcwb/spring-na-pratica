@@ -17,7 +17,6 @@ Este projeto demonstra um sistema de **CRUD de Usuários** com:
 - Envio de e-mails (simulado)
 - Internacionalização com suporte a múltiplos idiomas
 
-Ideal para estudos e como base para aplicações empresariais.
 
 ---
 
