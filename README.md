@@ -24,6 +24,7 @@ Este projeto demonstra um sistema de **CRUD de Usuários** com:
 
 - **Cadastro de Usuários:** Com validação e verificação de e-mail único
 - **Login Seguro:** Usando Spring Security e senhas com BCrypt
+- **Logout Seguro:** Usando Spring Security Config
 - **Listagem e Filtro:** Paginação com busca por nome
 - **Edição de Usuários:** Atualização de dados, e-mail e senha
 - **Mensagens Multilíngue:** `pt` e `en` com arquivos de properties
