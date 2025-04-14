@@ -1,103 +1,108 @@
- VMTEC – Cadastro de Usuários - Aplicação disponível em: 
- https://vmtec-0e7049358cd1.herokuapp.com/
+# VMTEC – Cadastro de Usuários
 
-Aplicação em Spring Boot para cadastro, listagem e edição de usuários. Inclui autenticação com Spring Security, envio de e-mails (simulado) e layout modular com Apache Tiles.
+🌐 Aplicação disponível em: [vmtec-0e7049358cd1.herokuapp.com](https://vmtec-0e7049358cd1.herokuapp.com/)
 
-# 1. Visão Geral
-Este projeto foi desenvolvido para demonstrar um CRUD de Usuários em um ambiente Spring Boot, com persistência via MySQL e segurança básica por meio do Spring Security.
+Uma aplicação completa em **Spring Boot** para cadastro, autenticação e gerenciamento de usuários, com layout modular, envio de e-mails simulado, e suporte à internacionalização.
 
-O objetivo principal é fornecer um exemplo completo de aplicação web em camadas, incluindo:
+---
 
-- Cadastro de novos usuários com verificação de e-mail único.
+## 🚀 Visão Geral
 
-- Listagem paginada e filtrável de usuários.
+Este projeto demonstra um sistema de **CRUD de Usuários** com:
 
-- Edição dos dados de cada usuário.
+- Backend robusto em Spring Boot
+- Segurança via Spring Security
+- Layout com Apache Tiles
+- Persistência de dados com MySQL
+- Envio de e-mails (simulado)
+- Internacionalização com suporte a múltiplos idiomas
 
-- Autenticação via formulário de login.
+Ideal para estudos e como base para aplicações empresariais.
 
-- Envio de e-mails simulado no console para fins de notificação e rollback da transação quando ocorrer erro no cadastro do usuário.
+---
 
-# 2. Principais Funcionalidades
-Registro de Usuários: Endpoint público para criar um novo cadastro, com validação de dados (Bean Validation).
+## ✨ Funcionalidades Principais
 
-Autenticação: Login tradicional controlado pelo Spring Security, com senha criptografada em BCrypt.
+- **Cadastro de Usuários:** Com validação e verificação de e-mail único
+- **Login Seguro:** Usando Spring Security e senhas com BCrypt
+- **Listagem e Filtro:** Paginação com busca por nome
+- **Edição de Usuários:** Atualização de dados, e-mail e senha
+- **Mensagens Multilíngue:** `pt` e `en` com arquivos de properties
+- **Layout Modular:** Com Apache Tiles e JSP
+- **Feedback Instantâneo:** Validações e mensagens via AJAX
 
-Gerenciamento de Usuários:
+---
 
-Listagem paginada e filtrável por nome.
+## 🧠 Arquitetura em Camadas
 
-Edição de dados, incluindo troca de e-mail (checa duplicidade) e atualização de senha.
+```
+Controller (Apresentação)
+   ↓
+Service (Regra de Negócio)
+   ↓
+Repository (Persistência)
+   ↓
+Model (Entidades)
+```
 
-Internacionalização (i18n): Mensagens de erro/sucesso em mais de um idioma (ex.: messages_pt.properties e messages_en.properties).
+---
 
-Layout usando Apache Tiles para organização de templates JSP.
+## 🛠️ Tecnologias Utilizadas
 
-# 3. Arquitetura em Camadas
+- **Java 11**
+- **Spring Boot 2.7.x**
+- **Spring MVC / JPA / Security / Validation**
+- **MySQL**
+- **Apache Tiles**
+- **JUnit 5 + Mockito**
 
-Controller (Apresentação)  ->  Service (Regra de Negócio)  ->  Repository (Persistência)  ->  Model (Entidades)
+Veja o `pom.xml` para mais detalhes das dependências.
 
-# 4. Tecnologias e Dependências Principais
-- Java 11
-- Spring Boot 2.7.x
-- Starter Web (Spring MVC)
-- Starter Data JPA (Hibernate)
-- Starter Security (Autenticação)
-- Starter Validation (Bean Validation)
-- MySQL (Driver JDBC)
-- Apache Tiles (Layout de páginas JSP)
-- Spring Security OAuth (dependência disponível, mas login social não implementado)
-- JUnit 5 e Mockito (via spring-boot-starter-test) para testes.
+---
 
-No arquivo pom.xml constam detalhes de versão e demais bibliotecas auxiliares.
+## 📁 Estrutura do Projeto
 
-# 5. Estrutura de Pacotes
+- `User`: Entidade JPA com campos principais e datas
+- `UserRegistrationDto`: DTO para cadastro/edição
+- `UserServiceImpl`: Lógica de negócio principal
+- `UserRepository`: Acesso a dados com consultas customizadas
 
-- User: Entidade JPA que representa o usuário (campos de nome, email, senha, datas(último login, criação, atualização, etc.).
+---
 
-- UserRegistrationDto: Captura dados de formulário para cadastro/edição de usuários.
+## 🌍 Internacionalização (i18n)
 
-- UserServiceImpl: Lógica principal de cadastro de usuário (verifica duplicidade, criptografa senha, envia e-mail).
+Mensagens em `pt` e `en` são carregadas pela `MessageSourceConfig`, aplicadas em validações e respostas para o cliente conforme o `Locale`.
 
-- UserRepository: Métodos de consulta por email, busca paginada etc.
+---
 
-# 6. Internacionalização (i18n)
-A classe MessageSourceConfig carrega messages_en.properties e messages_pt.properties. 
-O Bean Validation também usa essas mensagens para feedback de erros.
+## 🖥️ Frontend com JSP + Tiles
 
-Mensagens de sucesso e erro de cadastro, duplicidade de e-mail etc. 
-São obtidas do MessageSource, respeitando o Locale do cliente.
+- Layout principal em `WEB-INF/tiles.xml`
+- Páginas públicas: `sign-in.jsp`, `sign-up.jsp`
+- Páginas autenticadas: `list-users.jsp`, `edit-user.jsp`
+- Recursos estáticos: CSS, JS, imagens em `/static/assets`
+- AJAX para feedback em tempo real durante o registro
 
-# 7. Frontend (JSP + Tiles)
-Tiles: O arquivo WEB-INF/tiles.xml define o layout principal (template.jsp) e as páginas (list-users, edit-user, login, register).
+---
 
-Páginas públicas: sign-in.jsp e sign-up.jsp (não usam o template principal; têm layout próprio).
+## 🔐 Segurança com Spring Security
 
-Páginas autenticadas: list-users.jsp, edit-user.jsp (estendem o template base).
+- **Login:** Formulário em `/login`, autentica via `/j_spring_security_check`
+- **Logout:** Acessível em `/logout`
+- **Rotas públicas:** `/assets/**`, `/register`, `/forgot-password` (não implementada)
+- **Proteção:** Demais rotas requerem autenticação
+- **CSRF:** Desativado para facilitar uso com AJAX
 
-Recursos estáticos: Em src/main/resources/static/assets (CSS, JS, imagens).
+---
 
-AJAX no registro de usuário: SignUpController retorna ResponseEntity (código HTTP 200 ou 400)
-e a página sign-up.jsp exibe alertas.
+## 🧪 Testes
 
-# 8. Segurança (Spring Security)
-- Segurança configurada em SecurityConfig.java, com CSRF desabilitado para facilitar chamadas AJAX.
+- `UserServiceImplTest`: Testes com JUnit/Mockito para:
+  - Cadastro com sucesso
+  - E-mail duplicado
+  - Criptografia da senha
+- `VmtecApplicationTests`: Verifica se o contexto Spring carrega corretamente
 
-- Rotas liberadas: /assets/**, /register, /forgot-password (não implementada).
+---
 
-- Protegidas: todas as demais rotas exigem login.
-
-- Login: página em /login, envia credenciais para /j_spring_security_check e, se bem-sucedido, redireciona para /users.
-
-- Logout: acessível em /logout.
-
-# 9. Testes
-UserServiceImplTest: Exemplifica testes unitários com JUnit/Mockito, validando:
-
-- Registro bem-sucedido.
-
-- Falha ao tentar cadastrar usuário com e-mail duplicado.
-
-- Criptografia de senha.
-
-- Contexto Spring: VmtecApplicationTests verifica se a aplicação carrega corretamente.
+Made with 💚 using Spring Boot.
