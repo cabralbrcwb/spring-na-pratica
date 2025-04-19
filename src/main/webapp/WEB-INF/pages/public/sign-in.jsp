@@ -85,7 +85,6 @@
 
                         <div class="fxt-form">
                             <!-- Formulário de login -->
-                            <!-- Observação: o SecurityConfig precisa usar .loginProcessingUrl("/j_spring_security_check") -->
                             <form action="<c:url value='/j_spring_security_check'/>" method="post">
                                 <!-- Campo hidden para enviar o token CSRF -->
                                 <input
@@ -116,22 +115,23 @@
                                         required="required"
                                         autocomplete="current-password"
                                     >
-                                    <!-- Ícone para mostrar/ocultar senha (opcional) -->
+
                                     <i
                                         toggle="#j_password"
                                         class="fa fa-fw fa-eye toggle-password field-icon"
                                     ></i>
                                 </div>
 
-                                <!-- Exemplo de checkbox 'Mantenha-me conectado' (opcional) -->
-                                <div class="form-group">
+
+                                <!--<div class="form-group">
                                     <div class="fxt-checkbox-area">
+
                                         <div class="checkbox">
                                             <input id="checkbox1" type="checkbox">
                                             <label for="checkbox1">Mantenha-me conectado</label>
                                         </div>
                                     </div>
-                                </div>
+                                </div>-->
 
                                 <!-- Botão de login -->
                                 <div class="form-group">
