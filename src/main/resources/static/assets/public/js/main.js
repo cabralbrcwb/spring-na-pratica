@@ -148,28 +148,4 @@
         $(".progress-bar")
             .css("width", percent + "%")
     }
-
-   function setMessages () {
-        // Verifica se há mensagens flash para exibir
-        var successMessage = "${successMessage}";
-        var errorMessage = "${errorMessage}";
-
-        if (successMessage && successMessage.trim() !== "") {
-            $('#successMessage').text(successMessage);
-            $('#successNotification').fadeIn(500);
-            setTimeout(function() {
-                $('#successNotification').fadeOut(500);
-            }, 5000);
-        }
-
-        if (errorMessage && errorMessage.trim() !== "") {
-            $('#notificationMessage').text(errorMessage);
-            $('#notification').fadeIn(500);
-            setTimeout(function() {
-                $('#notification').fadeOut(500);
-            }, 5000);
-        }
-    };
-
-
 })(jQuery);
