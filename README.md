@@ -104,7 +104,7 @@ Mensagens em `pt` e `en` são carregadas pela `MessageSourceConfig`, aplicadas e
 
 - **Login:** Formulário em `/login`, autentica via `/j_spring_security_check`
 - **Logout:** Acessível em `/logout`
-- **Rotas públicas:** `/assets/**`, `/register`, `/forgot-password` (não implementada)
+- **Rotas públicas:** `/assets/**`, `/register`, `/forgot-password` (forgot-password não finalizada)
 - **Proteção:** Demais rotas requerem autenticação
 - **CSRF:** Desativado para facilitar uso com AJAX
 
