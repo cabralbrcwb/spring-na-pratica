@@ -148,5 +148,4 @@
         $(".progress-bar")
             .css("width", percent + "%")
     }
-
 })(jQuery);

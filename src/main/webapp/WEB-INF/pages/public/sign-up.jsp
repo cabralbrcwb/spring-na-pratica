@@ -119,7 +119,7 @@
                                         <i toggle="#password" class="fa fa-fw fa-eye toggle-password field-icon"></i>
                                     </div>
                                 </div>
-
+                                <!--
                                 <div class="form-group">
                                     <div class="fxt-transformY-50 fxt-transition-delay-3">
                                         <div class="fxt-checkbox-area">
@@ -130,6 +130,7 @@
                                         </div>
                                     </div>
                                 </div>
+                                -->
 
                                 <div class="form-group">
                                     <div class="fxt-transformY-50 fxt-transition-delay-4">
