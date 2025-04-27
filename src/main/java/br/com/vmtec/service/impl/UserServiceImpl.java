@@ -1,6 +1,7 @@
 package br.com.vmtec.service.impl;
 
 import br.com.vmtec.dto.UserRegistrationDto;
+import br.com.vmtec.exception.PasswordTooShortException;
 import br.com.vmtec.exception.UserAlreadyExistAuthenticationException;
 import br.com.vmtec.exception.VmTecException;
 import br.com.vmtec.model.User;
@@ -14,14 +15,15 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional; // substitui javax.transaction.Transactional
-import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.context.i18n.LocaleContextHolder;
 
 import java.util.Optional;
 
 @Service
 public class UserServiceImpl implements UserService {
+
+    private static final int MINIMUM_PASSWORD_LENGTH = 6;
 
     private final UserRepository userRepository;
     private final EmailService emailService;
@@ -41,41 +43,29 @@ public class UserServiceImpl implements UserService {
 
     @Override
     @Transactional
-    public User registerNewUser(UserRegistrationDto userRegistrationDto)
-            throws UserAlreadyExistAuthenticationException {
-
-
-        if (userRepository.existsByEmail(userRegistrationDto.getEmail())) {
-
-            String emailInUseMessage = messageSource.getMessage(
-                    "message.registration.error",
-                    new Object[]{ userRegistrationDto.getEmail() },
-                    LocaleContextHolder.getLocale()
-            );
-            throw new UserAlreadyExistAuthenticationException(emailInUseMessage);
+    public User registerNewUser(UserRegistrationDto userRegistrationDto) {
+        if (userRegistrationDto.getPassword() == null ||
+                userRegistrationDto.getPassword().length() < MINIMUM_PASSWORD_LENGTH) {
+            int actualLength = userRegistrationDto.getPassword() != null ?
+                    userRegistrationDto.getPassword().length() : 0;
+            throw new PasswordTooShortException(MINIMUM_PASSWORD_LENGTH, actualLength);
         }
 
+        if (userRepository.existsByEmail(userRegistrationDto.getEmail())) {
+            throw new UserAlreadyExistAuthenticationException(userRegistrationDto.getEmail());
+        }
 
         User user = new User();
         user.setName(userRegistrationDto.getName());
         user.setEmail(userRegistrationDto.getEmail());
-
         user.setPassword(passwordEncoder.encode(userRegistrationDto.getPassword()));
         user.setEnabled(true);
 
-
         User userSaved = userRepository.save(user);
-
-        // Envia e-mail de boas-vindas
 
         String subject = messageSource.getMessage(
                 "message.sendemail.subject.register",
                 null,
-                LocaleContextHolder.getLocale()
-        );
-        String content = messageSource.getMessage(
-                "message.sendemail.content.register",
-                new Object[]{ userSaved.getName() }, // placeholder {0} para o nome
                 LocaleContextHolder.getLocale()
         );
 
@@ -117,9 +107,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Transactional
-    public User updateUser(Integer id, UserRegistrationDto dto)
-            throws UserAlreadyExistAuthenticationException {
-
+    public User updateUser(Integer id, UserRegistrationDto dto) {
         User user = userRepository.findById(id)
                 .orElseThrow(() -> {
                     String notFoundMsg = messageSource.getMessage("message.user.notfound",
@@ -127,31 +115,32 @@ public class UserServiceImpl implements UserService {
                     return new VmTecException(notFoundMsg);
                 });
 
-        // Verifica se o email foi alterado
-        if (!user.getEmail().equals(dto.getEmail())) {
-            if (userRepository.existsByEmail(dto.getEmail())) {
-                String emailInUseMessage = messageSource.getMessage("message.registration.error",
-                        new Object[]{ dto.getEmail() }, LocaleContextHolder.getLocale());
-                throw new UserAlreadyExistAuthenticationException(emailInUseMessage);
-            }
-            user.setEmail(dto.getEmail());
+        if (dto.getPassword() != null && !dto.getPassword().isEmpty() &&
+                dto.getPassword().length() < MINIMUM_PASSWORD_LENGTH) {
+            throw new PasswordTooShortException(MINIMUM_PASSWORD_LENGTH, dto.getPassword().length());
+        }
+
+        if (!user.getEmail().equals(dto.getEmail()) &&
+                userRepository.existsByEmail(dto.getEmail())) {
+            throw new UserAlreadyExistAuthenticationException(dto.getEmail());
         }
 
         user.setName(dto.getName());
 
-        // Atualiza senha somente se informada
+        if (!user.getEmail().equals(dto.getEmail())) {
+            user.setEmail(dto.getEmail());
+        }
+
         if (dto.getPassword() != null && !dto.getPassword().isEmpty()) {
             user.setPassword(passwordEncoder.encode(dto.getPassword()));
         }
 
         User updatedUser = userRepository.save(user);
 
-        // Envia email de notificação
         String subject = messageSource.getMessage("message.sendemail.subject.update",
                 null, LocaleContextHolder.getLocale());
         emailService.enviarEmail(updatedUser.getEmail(), subject);
 
         return updatedUser;
     }
-
 }

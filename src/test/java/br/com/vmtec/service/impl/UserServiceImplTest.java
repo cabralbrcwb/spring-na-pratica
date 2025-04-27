@@ -63,8 +63,6 @@ class UserServiceImplTest {
      */
     @Test
     void shouldThrowExceptionIfEmailExists() {
-        when(messageSource.getMessage(anyString(), any(), any(Locale.class)))
-                .thenReturn("Email já cadastrado");
 
         when(userRepository.existsByEmail("daniel@silva.com")).thenReturn(true);
 
