@@ -1,6 +1,7 @@
 package br.com.vmtec.controller;
 
 import br.com.vmtec.dto.UserRegistrationDto;
+import br.com.vmtec.exception.PasswordTooShortException;
 import br.com.vmtec.exception.UserAlreadyExistAuthenticationException;
 import br.com.vmtec.exception.VmTecException;
 import br.com.vmtec.service.UserService;
@@ -8,6 +9,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.MessageSource;
+import org.springframework.context.NoSuchMessageException;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -26,7 +28,6 @@ import java.util.Locale;
 public class SignUpController {
 
     private final Logger logger = LogManager.getLogger(getClass());
-    private String errorMessage;
 
     @Autowired
     private MessageSource messageSource;
@@ -51,15 +52,27 @@ public class SignUpController {
         Locale locale = RequestContextUtils.getLocale(request);
 
         try {
-            
             if (result.hasErrors()) {
                 ObjectError firstError = result.getAllErrors().get(0);
-                String validationErrorKey = firstError.getCode();
-                String message = messageSource.getMessage(validationErrorKey, new Object[]{validationErrorKey}, locale);
+                String[] errorCodes = firstError.getCodes();
+                String message = null;
+
+                for (String code : errorCodes) {
+                    try {
+                        message = messageSource.getMessage(code, firstError.getArguments(), locale);
+                        break;
+                    } catch (NoSuchMessageException e) {
+                        continue;
+                    }
+                }
+
+                if (message == null) {
+                    message = firstError.getDefaultMessage();
+                }
+
                 return ResponseEntity.badRequest().body(message);
             }
 
-            
             userService.registerNewUser(userRegistrationDto);
 
             String successMessage = messageSource.getMessage("message.registration.success", null, locale);
@@ -68,10 +81,19 @@ public class SignUpController {
         } catch (UserAlreadyExistAuthenticationException e) {
             logger.error("Erro de usuário duplicado", e);
 
-            
             String errorMessage = messageSource.getMessage(
-                    "message.registration.error",
-                    new Object[]{userRegistrationDto.getEmail()},
+                    "message.registration.email.exists.error",
+                    new Object[]{e.getEmail()},
+                    locale
+            );
+            return ResponseEntity.badRequest().body(errorMessage);
+
+        } catch (PasswordTooShortException e) {
+            logger.error("Erro de senha muito curta", e);
+
+            String errorMessage = messageSource.getMessage(
+                    "message.password.too.short",
+                    new Object[]{e.getMinimumLength()},
                     locale
             );
             return ResponseEntity.badRequest().body(errorMessage);
@@ -86,18 +108,5 @@ public class SignUpController {
             String genericError = messageSource.getMessage("message.generic.error", null, locale);
             return ResponseEntity.status(500).body(genericError);
         }
-    }
-
-    public void setErrorMessage(String errorMessage) {
-        this.errorMessage = errorMessage;
-    }
-    public String getErrorMessage() {
-        return errorMessage;
-    }
-    public void setUserService(UserService userService) {
-        this.userService = userService;
-    }
-    public void setMessageSource(MessageSource messageSource) {
-        this.messageSource = messageSource;
     }
 }
