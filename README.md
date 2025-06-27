@@ -15,7 +15,7 @@
 
 # VMTEC – Cadastro de Usuários
 
-🌐 Aplicação disponível em: [vmtec-0e7049358cd1.herokuapp.com](https://vmtec-0e7049358cd1.herokuapp.com/)
+
 
 Uma aplicação completa em **Spring Boot** para cadastro, autenticação e gerenciamento de usuários, com layout modular, envio de e-mails simulado, e suporte à internacionalização.
 
