@@ -25,7 +25,7 @@ Uma aplicação completa em **Spring Boot** para cadastro, autenticação e gere
 
 Este projeto demonstra um sistema de **CRUD de Usuários** com:
 
-- Backend robusto em Spring Boot
+- Backend em Spring Boot
 - Segurança via Spring Security
 - Layout com Apache Tiles
 - Persistência de dados com MySQL
