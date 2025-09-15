@@ -46,7 +46,7 @@
                <div
                   id="fxtVideo"
                   data-property="{
-                      videoURL:'n_30MdZ9kL8',
+                      videoURL:'F_7ZoAQ3aJM',
                       autoPlay:true,
                       mute:true,
                       loop:true,
