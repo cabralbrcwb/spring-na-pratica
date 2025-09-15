@@ -1,4 +1,4 @@
-# VMTEC – Sistema de Cadastro de Usuários
+# Spring-Na-Pratica – Sistema de Cadastro de Usuários
 
 [![Status do Build](https://img.shields.io/badge/build-passing-brightgreen.svg)](https://github.com/)
 
@@ -13,7 +13,7 @@
   <img src="https://img.shields.io/badge/Mockito-testing-blueviolet.svg" alt="Mockito">
 </p>
 
-# VMTEC – Cadastro de Usuários
+# Spring-Na-Pratica – Cadastro de Usuários
 
 
 
@@ -116,7 +116,7 @@ Mensagens em `pt` e `en` são carregadas pela `MessageSourceConfig`, aplicadas e
   - Cadastro com sucesso
   - E-mail duplicado
   - Criptografia da senha
-- `VmtecApplicationTests`: Verifica se o contexto Spring carrega corretamente
+- `Spring-Na-PraticaApplicationTests`: Verifica se o contexto Spring carrega corretamente
 
 ---
 
